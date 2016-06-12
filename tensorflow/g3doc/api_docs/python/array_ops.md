@@ -216,7 +216,7 @@ This operation returns a 1-D integer tensor representing the shape of `input`.
 
 For example:
 
-```prettyprint
+```python
 # 't' is [[[1, 1, 1], [2, 2, 2]], [[3, 3, 3], [4, 4, 4]]]
 shape(t) ==> [2, 2, 3]
 ```
@@ -224,7 +224,7 @@ shape(t) ==> [2, 2, 3]
 ##### Args:
 
 
-*  <b>`input`</b>: A `Tensor`.
+*  <b>`input`</b>: A `Tensor` or `SparseTensor`.
 *  <b>`name`</b>: A name for the operation (optional).
 
 ##### Returns:
@@ -269,20 +269,20 @@ This operation returns an integer representing the rank of `input`.
 
 For example:
 
-```prettyprint
+```python
 # 't' is [[[1, 1, 1], [2, 2, 2]], [[3, 3, 3], [4, 4, 4]]]
 # shape of tensor 't' is [2, 2, 3]
 rank(t) ==> 3
 ```
 
-**Note**: The rank of a tensor is not the same as the rank of a matrix. The rank
-of a tensor is the number of indices required to uniquely select each element
-of the tensor. Rank is also known as "order", "degree", or "ndims."
+**Note**: The rank of a tensor is not the same as the rank of a matrix. The
+rank of a tensor is the number of indices required to uniquely select each
+element of the tensor. Rank is also known as "order", "degree", or "ndims."
 
 ##### Args:
 
 
-*  <b>`input`</b>: A `Tensor`.
+*  <b>`input`</b>: A `Tensor` or `SparseTensor`.
 *  <b>`name`</b>: A name for the operation (optional).
 
 ##### Returns:
@@ -457,6 +457,51 @@ size 1.
   A `Tensor`. Has the same type as `input`.
   Contains the same data as `input`, but its shape has an additional
   dimension of size 1 added.
+
+
+- - -
+
+### `tf.meshgrid(*args, **kwargs)` {#meshgrid}
+
+Broadcasts parameters for evaluation on an N-D grid.
+
+Given N one-dimensional coordinate arrays `*args`, returns a list `outputs`
+of N-D coordinate arrays for evaluating expressions on an N-D grid.
+
+Notes:
+
+`meshgrid` supports cartesian ('xy') and matrix ('ij') indexing conventions.
+When the `indexing` argument is set to 'xy' (the default), the broadcasting
+instructions for the first two dimensions are swapped.
+
+Examples:
+
+Calling `X, Y = meshgrid(x, y)` with the tensors
+```prettyprint
+  x = [1, 2, 3]
+  y = [4, 5, 6]
+```
+results in
+```prettyprint
+  X = [[1, 1, 1],
+       [2, 2, 2],
+       [3, 3, 3]]
+  Y = [[4, 5, 6],
+       [4, 5, 6],
+       [4, 5, 6]]
+```
+
+##### Args:
+
+
+*  <b>`*args`</b>: `Tensor`s with rank 1
+*  <b>`indexing`</b>: Either 'xy' or 'ij' (optional, default: 'xy')
+*  <b>`name`</b>: A name for the operation (optional).
+
+##### Returns:
+
+
+*  <b>`outputs`</b>: A list of N `Tensor`s with rank N
 
 
 
@@ -940,7 +985,7 @@ tf.transpose(x, perm=[0, 2, 1]) ==> [[[1  4]
 
 ### `tf.extract_image_patches(images, padding, ksizes=None, strides=None, rates=None, name=None)` {#extract_image_patches}
 
-Extract `patches` from `images` and puth them in the "depth" output dimension.
+Extract `patches` from `images` and put them in the "depth" output dimension.
 
 ##### Args:
 
